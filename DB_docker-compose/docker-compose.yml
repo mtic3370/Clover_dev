@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # FastAPI 서비스
+  fastapi:
+    build: .
+    container_name: fastapi-todo-app
+    ports:
+      - "8000:8000"
+    environment:
+      # Docker Compose에서는 'mysql'이 호스트명
+      - DATABASE_URL=mysql+pymysql://root:1234@mysql/fastapi_todo
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - todo-network
+
+  # MySQL 서비스
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-todo-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=fastapi_todo
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-todo-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - todo-network
+
+networks:
+  todo-network:
+    driver: bridge
+
+volumes:
+  mysql-todo-data:
