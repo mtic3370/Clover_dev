@@ -1,0 +1,171 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 20px auto;
+}
+.field {
+  margin-bottom: 10px;
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: none;
+  z-index: 1000;
+  color: #e6e6e6; /* 10% gray */
+}
+
+.hidden {
+  display: none;
+}
+
+.actions-list {
+  margin: 8px 0;
+  padding-left: 18px;
+}
+
+/* ===== 신분증 팝업 ===== */
+#id-modal {
+  pointer-events: none; /* 바깥 클릭 막기용 */
+}
+.id-modal-content {
+  position: absolute;
+  background: #ffffff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  max-width: 320px;
+  pointer-events: auto; /* 팝업 내부는 클릭 가능 */
+  color: #e6e6e6; /* 10% gray */
+}
+
+/* ===== 안면인식 풀스크린 팝업 ===== */
+#face-modal {
+  background: #000; /* 완전 검은 배경 */
+  display: none;
+}
+.face-modal-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: stretch;
+  color: #e6e6e6; /* 10% gray */
+}
+
+#camera-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 확대 줄이고 전체 프레임 보여주기 */
+  background: #000;
+}
+/* 세로로 긴 타원형 영역 (파란색 직선 보더) */
+#face-area {
+  position: absolute;
+  width: 40%;
+  height: 80%;
+  top: 10%;
+  left: 30%;
+  border-radius: 40% / 80%; /* 세로로 길게 */
+  border: 2px solid #007bff;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.face-area-error {
+  border-color: red;
+  animation: blink 0.6s linear infinite;
+}
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* 카메라 위에 깔리는 하단 UI 오버레이 */
+#face-ui-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 14px 16px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.4),
+    transparent
+  );
+  color: #ffffff;
+  font-size: 15.4px;
+}
+#face-error {
+  color: #ff8080;
+  margin-top: 6px;
+}
+#face-complete-icon {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #007bff;
+  color: #ffffff;
+  font-weight: bold;
+  margin-top: 6px;
+}
+#face-close-area {
+  text-align: right;
+  margin-top: 6px;
+}
+#face-close-area button {
+  padding: 4px 10px;
+}
+
+/* 안면인식 성공 중앙 오버레이 */
+#face-success-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none; /* 클릭 방해 안 함 */
+}
+
+#face-success-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #007bff; /* 내부 파란색으로 채움 */
+  color: #ffffff; /* 글자는 흰색 */
+  font-size: 40px;
+  font-weight: bold;
+}
+
+#face-success-text {
+  /* margin-top: 10px; */
+  font-size: 24px;
+  font-weight: bold;
+  color: #00bfff;
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.7);
+}

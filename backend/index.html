@@ -1,0 +1,117 @@
+<!-- D:\exaone_test\venv\index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ID + Face Verification Demo</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>회원가입 - 신분증 + 안면인식 데모</h1>
+
+    <!-- STEP 1: 기본 회원가입 페이지 -->
+    <div class="field">
+      <label for="name">이름</label>
+      <input id="name" type="text" />
+    </div>
+
+    <!-- 주민번호 (신분확인 후 자동 입력) -->
+    <div class="field">
+      <label>주민등록번호</label>
+      <div>
+        <input id="rrn-front" type="text" readonly />
+        -
+        <input id="rrn-back-first" type="text" readonly size="1" />
+        <span id="rrn-back-masked">******</span>
+      </div>
+    </div>
+
+    <!-- 생년월일 -->
+    <div class="field">
+      <label for="dob">생년월일 (자동 입력)</label>
+      <input id="dob" type="text" readonly />
+    </div>
+
+    <!-- 신분확인 버튼 -->
+    <div class="field">
+      <button id="btn-open-id-modal">신분확인</button>
+    </div>
+
+    <!-- 최종 가입 버튼 -->
+    <div class="field">
+      <button id="btn-submit" disabled>가입 완료</button>
+    </div>
+
+    <hr />
+    <p><strong>디버그 로그:</strong></p>
+    <pre id="log"></pre>
+
+    <!-- 신분확인 팝업 (버튼 옆 위치) -->
+    <div id="id-modal" class="modal">
+      <div class="id-modal-content" id="id-modal-content">
+        <h3>신분증 등록</h3>
+        <div class="field">
+          <label>신분증 종류</label>
+          <label
+            ><input type="radio" name="id-type" value="resident" checked />
+            주민등록증</label
+          >
+          <label
+            ><input type="radio" name="id-type" value="driver" />
+            운전면허증</label
+          >
+        </div>
+
+        <div class="field">
+          <button id="btn-mock-ocr">신분증 촬영 (OCR 모의)</button>
+          <small>※ 실제에선 카메라 + OCR로 교체</small>
+        </div>
+
+        <div class="field">
+          <label for="input-id-number">고유식별값 (수정 가능)</label>
+          <input id="input-id-number" type="text" />
+        </div>
+
+        <div class="field">
+          <button id="btn-confirm-id">입력 확인</button>
+          <button id="btn-close-id-modal">닫기</button>
+        </div>
+
+        <p id="id-modal-message"></p>
+      </div>
+    </div>
+
+    <!-- 안면인식 풀스크린 팝업 -->
+    <div id="face-modal" class="modal">
+      <div class="face-modal-content">
+        <div id="camera-container">
+          <video id="video" autoplay playsinline></video>
+          <div id="face-area"></div>
+
+          <!-- ★ 카메라 화면 위 중앙 성공 텍스트 -->
+          <div id="face-success-overlay" class="hidden">
+            <div id="face-success-badge">ⓥ</div>
+            <div id="face-success-text">안면인식 성공</div>
+          </div>
+
+          <!-- 하단 UI 오버레이 -->
+          <div id="face-ui-overlay">
+            <p>다음 동작 2가지를 순서대로 수행해 주세요:</p>
+            <ol class="actions-list" id="face-actions-list"></ol>
+            <p id="face-status"></p>
+            <p id="face-error"></p>
+            <span id="face-complete-icon" class="hidden">ⓥ얼굴인식완료</span>
+            <div id="face-close-area">
+              <button id="btn-close-face-modal">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

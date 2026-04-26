@@ -1,0 +1,20 @@
+# 얼굴 인식 및 검증
+deepface==0.0.79
+tensorflow==2.15.0
+opencv-python==4.8.1.78
+pillow==10.1.0
+
+# OCR (신분증 텍스트 추출)
+easyocr==1.7.1
+
+# 웹 API 서버
+flask==3.0.0
+flask-cors==4.0.0
+
+# 유틸리티
+numpy==1.24.3
+requests==2.31.0
+
+# 데이터베이스
+pymysql==1.1.0
+sqlalchemy==2.0.23
